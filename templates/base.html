@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify Profile</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/main.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/player.css') }} ">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/spotify-icon.png') }}" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <ul>
+                <li><a href="/">Profile</a></li>
+                <li><a href="/tracks">Tracks</a></li>
+                <li><a href="/playlists">Playlists</a></li>
+            </ul>
+        </header>
+        <section>
+            <div class="section-container">
+                
+              {% block content %}{% endblock %}
+
+            </div>  
+
+        </section>
+        <footer>&copyLuke.mn</footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+    <script src="https://kit.fontawesome.com/01edd83a56.js" crossorigin="anonymous"></script>
+</body>
+</html>
