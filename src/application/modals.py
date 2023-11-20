@@ -31,8 +31,8 @@ class ProfileModel(db.Model):
     def __repr__(self) -> str:
         return 'Id <%r>' % self.spotify_id
 
-class FollowedArtistsModel(db.Model):
-    __tablename__ = "tb_followed_artists"
+class ArtistModel(db.Model):
+    __tablename__ = "tb_artist"
 
     id = db.Column(db.String(100), primary_key=True)
     artist = db.Column(db.String(50))

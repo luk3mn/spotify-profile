@@ -75,7 +75,7 @@ class DataFormat:
 
         return pd.DataFrame(profile_dict)
 
-    def format_followed_artists(self, response: object) -> object:
+    def format_top_artists(self, response: object) -> object:
         """
         :param response (object): json response from followed artist
         :return df (DataFrame): pandas DataFrame with data requests
@@ -89,7 +89,7 @@ class DataFormat:
         images_artist = []
         spotify_url = []
 
-        for r in response['artists']['items']:
+        for r in response['items']:
             artist_id.append(r['id'])
             artist.append(r['name'])
             genres.append(', '.join(str(g) for g in r['genres']))

@@ -35,13 +35,11 @@ NOTE: We explore the options to store links related with our Spotify data de cre
 """
 import os
 from flask import Flask, render_template, redirect, session, request
-# from flask import Flask
 from dotenv import load_dotenv
 
-# from application import ProfileModel, FollowedArtistsModel, ApplicationController
 from .utils import GetData, Authorization, DataFormat
 from .application.controller import ApplicationController
-from .application.modals import TrackModel, ProfileModel, FollowedArtistsModel
+from .application.modals import TrackModel, ProfileModel, ArtistModel
 from .ext import configuration, database
 
 load_dotenv()
@@ -65,7 +63,7 @@ database.init_app(app)
 
 @app.route('/')
 def profile():
-    artists = ApplicationController(model=FollowedArtistsModel()).retrieve_data()
+    artists = ApplicationController(model=ArtistModel()).retrieve_data()
     user_profile = ApplicationController(model=ProfileModel()).retrieve_data()
     return render_template('profile.html', artists=artists, user_profile=user_profile)
 
@@ -100,10 +98,12 @@ def callback():
     profile_c = ApplicationController(model=ProfileModel())
     profile_c.insert_data(data_format.format_users_profile(response=get_data.get_users_profile(user_id=SPOTIFY_USER_ID)))
 
-    followed_artists_c = ApplicationController(model=FollowedArtistsModel())
-    followed_artists_c.insert_data(data_format.format_followed_artists(response=get_data.get_followed_artists(limit=50)))
+    followed_artists_c = ApplicationController(model=ArtistModel())
+    followed_artists_c.insert_data(data_format.format_top_artists(response=get_data.get_users_top_items(type_item='artists', limit=50)))
+    # print(get_data.get_users_top_items(type_item='artists'))
 
-    print(data_format.format_followed_artists(response=get_data.get_followed_artists(limit=50)))
+    # data_format.format_followed_artists(response=get_data.get_users_top_items(type_item='artists'))
+    # print(data_format.format_followed_artists(response=get_data.get_users_top_items(type_item='artists')))
     return redirect('/')
 
 @app.route('/tracks')
