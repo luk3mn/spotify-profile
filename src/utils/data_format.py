@@ -10,7 +10,7 @@ class DataFormat:
         """ Structuring data collection 
         """
 
-    def format_top_items(self, response: object) -> object:
+    def format_top_tracks(self, response: object) -> object:
         """
         :param response (object): json response
         :return df (DataFrame): return to web app a pandas frame work

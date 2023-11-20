@@ -93,17 +93,14 @@ def callback():
         return redirect('/authorization') # if access token doesn't exist, redirect to get a new authentication
 
     track_c = ApplicationController(model=TrackModel())
-    track_c.insert_data(data_format.format_top_items(response=get_data.get_users_top_items(time_range='short_term', limit=50)))
+    track_c.insert_data(data_format.format_top_tracks(response=get_data.get_users_top_items(time_range='short_term', limit=50)))
 
     profile_c = ApplicationController(model=ProfileModel())
     profile_c.insert_data(data_format.format_users_profile(response=get_data.get_users_profile(user_id=SPOTIFY_USER_ID)))
 
-    followed_artists_c = ApplicationController(model=ArtistModel())
-    followed_artists_c.insert_data(data_format.format_top_artists(response=get_data.get_users_top_items(type_item='artists', limit=50)))
-    # print(get_data.get_users_top_items(type_item='artists'))
+    artists_c = ApplicationController(model=ArtistModel())
+    artists_c.insert_data(data_format.format_top_artists(response=get_data.get_users_top_items(type_item='artists', limit=50)))
 
-    # data_format.format_followed_artists(response=get_data.get_users_top_items(type_item='artists'))
-    # print(data_format.format_followed_artists(response=get_data.get_users_top_items(type_item='artists')))
     return redirect('/')
 
 @app.route('/tracks')
