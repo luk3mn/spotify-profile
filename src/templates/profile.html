@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile">
+    <a href="/authorization">Update data</a>
+    <ul>
+        {% for user in user_profile %}
+        <li>Name: {{user.name}}</li>
+        <li>{{user.profile}}</li>
+        <li>Id: {{user.spotify_id}}</li>
+        <li>Profile: {{user.spotify_profile}}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="followed-artists">
+    {% for artist in artists %}
+        {{ artist.artist }}
+    {% endfor %}
+</div>
+{% endblock %}

@@ -6,15 +6,13 @@ class DataFormat:
         - We can run this json file and get just values important for us
         - Finally, we will be able to structure these data in pandas DataFrame before loading it in some database
     """
-    def __init__(self, response) -> None:
+    def __init__(self) -> None:
         """ Structuring data collection 
-        
-        :param response (json): json response
         """
-        self.response = response
 
-    def format_top_items(self) -> object:
+    def format_top_items(self, response: object) -> object:
         """
+        :param response (object): json response
         :return df (DataFrame): return to web app a pandas frame work
         """
         song_names = []
@@ -30,7 +28,7 @@ class DataFormat:
         spotify_artist = []
 
         ### Storing our data into lists
-        for r in self.response['items']:
+        for r in response['items']:
             song_names.append(r['name'])
             song_id.append(r['id'])
             artist_names.append(r['artists'][0]['name'])
@@ -42,7 +40,6 @@ class DataFormat:
             spotify_song.append(r['external_urls']['spotify'])
             spotify_artist.append(r['artists'][0]['external_urls']['spotify'])
             spotify_album.append(r['album']['external_urls']['spotify'])
-            # print(r['album']['images'][0]['url'])
 
         ### Dictionary to structure our data before transforming in pandas DataFrame
         song_dict = {
@@ -62,16 +59,52 @@ class DataFormat:
         ### Here we could structured our data in pandas and returned as a object
         df = pd.DataFrame(song_dict, columns=['song_id', 'song', 'artist', 'album', 'release', 'popularity', 'preview_url', 'images_url', 'spotify_song', 'spotify_artist', 'spotify_album'])
         return df
-    
-    def get_tracks_uris(self) -> list:
-        """ Get uris from json file
-        
-        :return (uris): uris Spotify tracks list
-        """
-        uris = []
 
-        for r in self.response['items']:
-            uris.append(r['uri'])
-            
-        return uris
-    
+    def format_users_profile(self, response: object) -> object:
+        """
+        :param response (object): json response from user's profile
+        :return df (DataFrame): pandas DataFrame with data requests
+        """
+
+        profile_dict = {
+            "name": [response['display_name']],
+            "profile": [response['images'][1]['url']],
+            "spotify_profile": [response['external_urls']['spotify']],
+            "spotify_id": [response['id']]
+        }
+
+        return pd.DataFrame(profile_dict)
+
+    def format_followed_artists(self, response: object) -> object:
+        """
+        :param response (object): json response from followed artist
+        :return df (DataFrame): pandas DataFrame with data requests
+        """
+
+        artist_id = []
+        artist = []
+        genres = []
+        followers = []
+        popularity = []
+        images_artist = []
+        spotify_url = []
+
+        for r in response['artists']['items']:
+            artist_id.append(r['id'])
+            artist.append(r['name'])
+            genres.append(', '.join(str(g) for g in r['genres']))
+            followers.append(r['followers']['total'])
+            popularity.append(r['popularity'])
+            images_artist.append(r['images'][0]['url'])
+            spotify_url.append(r['external_urls']['spotify'])
+
+        dict_artist = {
+            "id": artist_id,
+            "artist": artist,
+            "genres": genres,
+            "popularity": popularity,
+            "image_artist": images_artist,
+            "spotify_url": spotify_url 
+        }
+
+        return pd.DataFrame(dict_artist)

@@ -1,5 +1,5 @@
-import requests
 import urllib
+import requests
 
 class Authorization:
     """To be able get a permission to access private data"""
@@ -15,14 +15,14 @@ class Authorization:
         self.__client_secret = client_secret
         self.__token_url = token_url
         self.__auth_url = 'https://accounts.spotify.com/authorize'
-    
+
     def get_auth(self, scope) -> str:
         """Get authorization
 
         :param scope (str): permissions type
         :return url (authorization) return to navigator after authentication
         """
-    
+
         params = {
             'client_id': self.__client_id,
             'response_type': 'code', # spotify documentation info to set 'code' here 
@@ -48,4 +48,5 @@ class Authorization:
             'client_secret': self.__client_secret
         }
 
-        return requests.post(url=self.__token_url, data=data, headers=headers)
+        response = requests.post(url=self.__token_url, data=data, headers=headers, timeout=5)
+        return response
