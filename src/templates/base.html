@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spotify Profile</title>
     <link rel="stylesheet" href=" {{ url_for('static', filename='css/main.css') }} ">
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/profile.css') }} ">
     <link rel="stylesheet" href=" {{ url_for('static', filename='css/player.css') }} ">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/spotify-icon.png') }}" type="image/x-icon">
 </head>
@@ -14,7 +15,7 @@
             <ul>
                 <li><a href="/">Profile</a></li>
                 <li><a href="/tracks">Tracks</a></li>
-                <li><a href="/playlists">Playlists</a></li>
+                <!-- <li><a href="/recommendation">Recommendation</a></li> -->
             </ul>
         </header>
         <section>

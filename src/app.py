@@ -15,7 +15,6 @@
 - Get User's Top Items (preview_url, external_urls[spotify]:'artist' and 'track'; url[track_image] )
     - Tracks
     - Artists
-- Get Followed Artists
 
 
 
@@ -112,6 +111,6 @@ def tracks():
     except Exception:
         return redirect('/authorization')
 
-@app.route('/playlists')
-def playlist():
-    return render_template('playlists.html')
+# @app.route('/recommendation')
+# def playlist():
+#     return render_template('playlists.html')

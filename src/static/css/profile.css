@@ -1,0 +1,200 @@
+.container .section-container .profile {
+    /* border: 1px solid rgb(0, 26, 255); */
+
+    display: flex;
+    width: 100%;
+    height: 260px
+}
+
+.container .section-container .profile .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* border: 1px dashed rgb(196, 12, 119); */
+    margin-left: .5rem;
+}
+
+.container .section-container .profile .profile-info .box-profile {
+    padding: 0;
+    margin: 0;
+    /* border: 1px dashed rgb(196, 18, 12); */
+}
+
+.container .section-container .profile .profile-info .box-profile a i {
+    position: absolute;
+    top: 10.5rem;
+    left: 6.8rem;
+    color: var(--bg-secondary);
+    font-weight: 700;
+    font-size: 1.3rem;
+    cursor: pointer;
+}
+
+.container .section-container .profile .profile-info .box-profile .picture {
+    
+    /* border: 3px solid var(--bg-secondary); */
+    border-radius: 10rem;
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+}
+
+.container .section-container .profile .profile-info .box-profile .picture img {
+    position: relative;
+    bottom: 2rem;
+    width: 110%;
+    height: 130%;
+}
+
+.container .section-container .profile .profile-info .box-details {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+.container .section-container .profile .profile-info .box-details li {
+    margin: .5rem;
+}
+
+.container .section-container .profile .profile-info .box-details li a {
+    color: var(--font-primary);
+    background-color: var(--bg-secondary);
+    text-decoration: none;
+    padding: .3rem;
+    border-radius: 1rem;
+    font-weight: 600;
+}
+
+/* ARTISTS */
+.container .section-container .profile .artists {
+    overflow-y: scroll;
+    width: 100%;
+    height: 240px;
+    margin: .5rem;
+    /* border: 2px solid red; */
+}
+
+.container .section-container .profile .artists .box-artist-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    /* border: 1px dashed blue; */
+}
+
+.container .section-container .profile .artists h3,
+.container .section-container .playlists h3 {
+    text-align: center;
+    text-transform: uppercase;
+    margin: 0;
+    color: var(--font-secondary);
+}
+
+.container .section-container .profile .artists .artist-card {
+    border: 2px solid var(--bg-secondary);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin: .4rem .3rem;
+    width: 500px;
+}
+
+.container .section-container .profile .artists .artist-card div {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: .2rem 0;
+}
+
+.container .section-container .profile .artists .artist-card div img {
+    width: 50px;
+    border-radius: 2rem;
+}
+
+.container .section-container .profile .artists .artist-card div ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.container .section-container .profile .artists .artist-card div a i {
+    color: var(--bg-secondary);
+    cursor: pointer;
+}
+
+.container .section-container .profile .artists .artist-card .genres {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    margin: 0;
+    background-color: var(--bg-secondary);
+    font-size: .8rem;
+}
+
+.container .section-container .profile .artists .artist-card .genres p, 
+.container .section-container .profile .artists .artist-card .genres h4 {
+    margin: 0;
+    text-align: center;
+    color: var(--font-primary);
+}
+
+/* PLAYLISTS */
+.container .section-container .playlists {
+    /* border: 2px solid green; */
+    width: 100%;
+    height: 60%;
+}
+
+.container .section-container .box-playlist-card {
+    /* border: 2px solid rgb(255, 0, 170); */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.container .section-container .playlists .playlist-card {
+    /* border: 2px solid var(--bg-secondary); */
+    display: flex;
+    align-items: center;
+    /* justify-content: space-around; */
+    /* justify-content: space-between; */
+    margin: .5rem;
+    /* padding: .3rem; */
+    /* border-radius: 5rem; */
+    overflow: hidden;
+    background-color: var(--bg-third);
+    width: 460px;
+}
+
+.container .section-container .playlists .playlist-card img {
+    width: 70px;
+    /* border-radius: 3rem; */
+}
+
+.container .section-container .playlists .playlist-card ul {
+    list-style: none;
+    /* border: 1px solid red; */
+    margin: 0 1rem;
+    width: 100%;
+    padding: 0;
+    color: var(--font-primary);
+}
+
+.container .section-container .playlists .playlist-card a i {
+    font-size: 2rem;
+    color: var(--bg-secondary);
+    cursor: pointer;
+    margin: 0 1rem;
+}
+
+.container .section-container .playlists .playlist-card a i:hover {
+    color: #1db954b7;
+}
+
+@media screen and (min-width: 820px) {
+    .container .section-container .profile .artists .artist-card div a i {
+        color: var(--bg-secondary);
+        cursor: pointer;
+        font-size: 1.3rem;
+    }
+}
