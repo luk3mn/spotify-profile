@@ -15,7 +15,7 @@ class ApplicationController:
 
     def retrieve_data(self):
         try:
-            profile = self.__model.query.all()
-            return profile
+            data = self.__model.query.all()
+            return data
         except Exception:
             return "Something went wrong to retrieve data"

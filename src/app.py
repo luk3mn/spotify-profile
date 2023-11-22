@@ -38,7 +38,7 @@ from dotenv import load_dotenv
 
 from .utils import GetData, Authorization, DataFormat
 from .application.controller import ApplicationController
-from .application.modals import TrackModel, ProfileModel, ArtistModel
+from .application.modals import TrackModel, ProfileModel, ArtistModel, PlaylistModel
 from .ext import configuration, database
 
 load_dotenv()
@@ -64,11 +64,12 @@ database.init_app(app)
 def profile():
     artists = ApplicationController(model=ArtistModel()).retrieve_data()
     user_profile = ApplicationController(model=ProfileModel()).retrieve_data()
-    return render_template('profile.html', artists=artists, user_profile=user_profile)
+    playlists = ApplicationController(model=PlaylistModel()).retrieve_data()
+    return render_template('profile.html', artists=artists, user_profile=user_profile, playlists=playlists)
 
 @app.route('/authorization')
 def authorization():
-    auth_url = get_authorization.get_auth(scope='user-top-read playlist-modify-public playlist-modify-private user-follow-read')
+    auth_url = get_authorization.get_auth(scope='user-top-read playlist-modify-public playlist-modify-private playlist-read-private')
     return redirect(auth_url)
 
 @app.route('/callback')
@@ -100,6 +101,8 @@ def callback():
     artists_c = ApplicationController(model=ArtistModel())
     artists_c.insert_data(data_format.format_top_artists(response=get_data.get_users_top_items(type_item='artists', limit=50)))
 
+    playlist_c = ApplicationController(model=PlaylistModel())
+    playlist_c.insert_data(data_format.format_current_playlists(response=get_data.get_current_users_playlist(limit=50)))
     return redirect('/')
 
 @app.route('/tracks')

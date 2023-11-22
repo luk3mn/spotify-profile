@@ -52,17 +52,19 @@
     <h3>User's PLaylists</h3>
     <div class="box-playlist-card">
         
+        {% for playlist in playlists %}
         <div class="playlist-card">
-            <img src="https://mosaic.scdn.co/640/ab67616d0000b2731759635c92b6314d3d3c9fe9ab67616d0000b273e44963b8bb127552ac761873ab67616d0000b273ea7caaff71dea1051d49b2feab67616d0000b273fbc71c99f9c1296c56dd51b6" alt="">
+            <img src="{{ playlist.image }}" alt="">
             <ul>
-                <li>Playlist: Show me the code</li>
-                <li>Owner: Lucas Renan</li>
-                <li>Tracks: 71</li>
+                <li>Playlist: {{playlist.name}}</li>
+                <li>Owner: {{ playlist.owner }}</li>
+                <li>Tracks: {{ playlist.total}}</li>
             </ul>
-            <a href="https://open.spotify.com/playlist/77LcbxphEgv162ZHXg99Or" target="_blank" rel="noopener noreferrer">
+            <a href="{{ playlist.spotify_url}}" target="_blank" rel="noopener noreferrer">
                 <i class="fa-solid fa-circle-play"></i>
             </a>
         </div>
+        {% endfor %}
     
     </div>
 </div>

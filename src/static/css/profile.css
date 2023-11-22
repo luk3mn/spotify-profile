@@ -18,12 +18,13 @@
     padding: 0;
     margin: 0;
     /* border: 1px dashed rgb(196, 18, 12); */
+    height: 123px;
 }
 
-.container .section-container .profile .profile-info .box-profile a i {
-    position: absolute;
-    top: 10.5rem;
-    left: 6.8rem;
+.container .section-container .profile .profile-info .box-profile a {
+    position: relative;
+    top: -2rem;
+    left: 6rem;
     color: var(--bg-secondary);
     font-weight: 700;
     font-size: 1.3rem;
@@ -57,12 +58,22 @@
 }
 
 .container .section-container .profile .profile-info .box-details li a {
+    display:  flex;
+    align-items: center;
+    justify-content: center;
+
     color: var(--font-primary);
     background-color: var(--bg-secondary);
     text-decoration: none;
-    padding: .3rem;
-    border-radius: 1rem;
+    padding: .4rem;
+    border-radius: 2rem;
     font-weight: 600;
+    text-transform: uppercase;
+}
+
+.container .section-container .profile .profile-info .box-details li a span {
+    margin-left: .3rem;
+    font-size: .9rem;
 }
 
 /* ARTISTS */

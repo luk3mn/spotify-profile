@@ -108,3 +108,35 @@ class DataFormat:
         }
 
         return pd.DataFrame(dict_artist)
+
+    def format_current_playlists(self, response: object) -> object:
+        """
+        :param response (object): playlist response
+        :return DataFrame (object): Playlist pandas DataFrame
+        """
+        id_playlist = []
+        image = []
+        name = []
+        owner = []
+        total = []
+        spotify_url = []
+
+        for r in response['items']:
+            id_playlist.append(r['id'])
+            name.append(r['name'])
+            image.append(r['images'][0]['url'])
+            owner.append(r['owner']['display_name'])
+            total.append(r['tracks']['total'])
+            spotify_url.append(r['external_urls']['spotify'])
+
+        dict_playlists = {
+            "id": id_playlist,
+            "name":name,
+            "image":image,
+            "owner":owner,
+            "total":total,
+            "spotify_url":spotify_url
+        }
+
+        df = pd.DataFrame(dict_playlists)
+        return df

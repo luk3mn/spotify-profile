@@ -25,10 +25,19 @@ class GetData:
 
         return response.json()
 
-    def get_users_profile(self, user_id):
+    def get_users_profile(self, user_id: str):
+        """
+        :param user_id (str): spotify's username
+        :return response (json): api spotify user's profile request
+        """
         response = requests.get(url=f"{self.__endpoint}users/{user_id}", headers=self.__headers, timeout=5)
         return response.json()
 
-    def get_followed_artists(self, limit: int = 10):
-        response = requests.get(url=f"{self.__endpoint}me/following?type=artist&limit={limit}", headers=self.__headers, timeout=5)
+    def get_current_users_playlist(self, limit: int = 25, offset: int = 0):
+        """
+        :param limit (int): playlist limit number
+        :param offset (int): The index of the first playlist to return
+        :return response (json): current playlist response 
+        """
+        response = requests.get(url=f"{self.__endpoint}me/playlists?limit={limit}&offset={offset}", headers=self.__headers, timeout=5)
         return response.json()

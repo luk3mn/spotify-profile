@@ -18,7 +18,6 @@ class TrackModel(db.Model):
 
     def __repr__(self):
         return 'Id <%r>' % self.song_id
-        # return f'{self.song_id}, {self.song}'
 
 class ProfileModel(db.Model):
     __tablename__ = "tb_profile"
@@ -43,3 +42,16 @@ class ArtistModel(db.Model):
 
     def __repr__(self) -> str:
         return "Id <%r>" % self.id
+
+class PlaylistModel(db.Model):
+    __tablename__ = "tb_playlist"
+
+    id = db.Column(db.String(100), primary_key=True)
+    name = db.Column(db.String(100))
+    image = db.Column(db.String(200))
+    owner = db.Column(db.String(50))
+    total = db.Column(db.Integer)
+    spotify_url = db.Column(db.String(200))
+
+    def __repr__(self) -> str:
+        return "Name <%r>" % self.name
