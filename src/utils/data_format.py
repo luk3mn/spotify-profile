@@ -10,7 +10,7 @@ class DataFormat:
         """ Structuring data collection 
         """
 
-    def format_top_tracks(self, response: object) -> object:
+    def format_top_tracks(self, response: object) -> pd.DataFrame:
         """
         :param response (object): json response
         :return df (DataFrame): return to web app a pandas frame work
@@ -60,7 +60,7 @@ class DataFormat:
         df = pd.DataFrame(song_dict, columns=['song_id', 'song', 'artist', 'album', 'release', 'popularity', 'preview_url', 'images_url', 'spotify_song', 'spotify_artist', 'spotify_album'])
         return df
 
-    def format_users_profile(self, response: object) -> object:
+    def format_users_profile(self, response: object) -> pd.DataFrame:
         """
         :param response (object): json response from user's profile
         :return df (DataFrame): pandas DataFrame with data requests
@@ -75,7 +75,7 @@ class DataFormat:
 
         return pd.DataFrame(profile_dict)
 
-    def format_top_artists(self, response: object) -> object:
+    def format_top_artists(self, response: object) -> pd.DataFrame:
         """
         :param response (object): json response from followed artist
         :return df (DataFrame): pandas DataFrame with data requests
@@ -109,7 +109,7 @@ class DataFormat:
 
         return pd.DataFrame(dict_artist)
 
-    def format_current_playlists(self, response: object) -> object:
+    def format_current_playlists(self, response: object) -> pd.DataFrame:
         """
         :param response (object): playlist response
         :return DataFrame (object): Playlist pandas DataFrame
@@ -140,3 +140,82 @@ class DataFormat:
 
         df = pd.DataFrame(dict_playlists)
         return df
+
+    def format_recently_played_tracks(self, response: object) -> pd.DataFrame:
+        """
+        :param response (object): Spotify API response
+        :return DataFrame (object): pandas DataFrame object
+        """
+
+        played_at = []
+        name = []
+        track_id = []
+        image = []
+        artist = []
+        album = []
+        release = []
+        album_url = []
+        popularity = []
+        preview_url = []
+        spotify_url = []
+
+        for r in response['items']:
+            played_at.append(r['played_at'])
+            name.append(r['track']['name'])
+            track_id.append(r['track']['id'])
+            artist.append(r['track']['artists'][0]['name'])
+            album.append(r['track']['album']['name'])
+            release.append(r['track']['album']['release_date'])
+            popularity.append(r['track']['popularity'])
+            preview_url.append(r['track']['preview_url'])
+            spotify_url.append(r['track']['external_urls']['spotify'])
+            album_url.append(r['track']['album']['external_urls']['spotify'])
+            image.append(r['track']['album']['images'][0]['url'])
+
+        dict_played = {
+            "played_at": played_at,
+            "name": name,
+            "image": image,
+            "track_id": track_id,
+            "artist": artist,
+            "album": album,
+            "release": release,
+            "popularity": popularity,
+            "preview_url": preview_url,
+            "spotify_url": spotify_url,
+            "album_url": album_url
+        }
+
+        return pd.DataFrame(dict_played)
+
+    def format_search_for_item(self, response: object) -> pd.DataFrame:
+        """
+        :param response (object): json response API
+        :return DataFrame (object): pandas DataFrame object
+        """
+        name = []
+        item_id = []
+        image = []
+        total = []
+        owner = []
+        spotify_url = []
+
+        for r in response['playlists']['items']:
+            if r['owner']['display_name'] != "Lucas Renan":
+                item_id.append(r['id'])
+                name.append(r['name'])
+                image.append(r['images'][0]['url'])
+                total.append(r['tracks']['total'])
+                spotify_url.append(r['external_urls']['spotify'])
+                owner.append(r['owner']['display_name'])
+
+        dict_items = {
+            "id": item_id,
+            "name": name,
+            "image": image,
+            "total": total,
+            "owner": owner,
+            "spotify_url": spotify_url
+        }
+
+        return pd.DataFrame(dict_items)

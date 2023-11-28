@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Discover</h1>
+    <!-- Recently Played Tracks -->
+    {% for track in played_tracks %}
+        {{ track.name }}
+    {% endfor %}
+
+    <!-- Most Played Track -->
+    {{ most_played }}
+    
+    <!-- Latest Played Track -->
+    {{ latest_played }}
+
+    <!-- Recommendations -->
+    {{ recommendations }}
+
+    <!-- Discover Weekly -->
+    {{ discover_weekly }}
+    
+{% endblock %}

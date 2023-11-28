@@ -55,3 +55,47 @@ class PlaylistModel(db.Model):
 
     def __repr__(self) -> str:
         return "Name <%r>" % self.name
+
+class RecentlyPlayedModel(db.Model):
+    __tablename__ = "tb_recently_played"
+
+    played_at = db.Column(db.String(200), primary_key=True)
+    name = db.Column(db.String(100))
+    image = db.Column(db.String(200))
+    track_id = db.Column(db.String(100))
+    artist = db.Column(db.String(50))
+    album = db.Column(db.String(50))
+    release = db.Column(db.String(20))
+    popularity = db.Column(db.Integer)
+    preview_url = db.Column(db.String(200))
+    spotify_url = db.Column(db.String(200))
+    album_url = db.Column(db.String(200))
+
+    def __repr__(self) -> str:
+        return "Name <%r>" % self.name
+
+class RecommendationModel(db.Model):
+    __tablename__ = "tb_recommendation"
+
+    id = db.Column(db.String(100), primary_key=True)
+    name = db.Column(db.String(100))
+    image = db.Column(db.String(200))
+    total = db.Column(db.Integer)
+    owner = db.Column(db.String(40))
+    spotify_url = db.Column(db.String(200))
+
+    def __repr__(self) -> str:
+        return "Name <%r>" % self.name
+
+class DiscoverWeeklyModel(db.Model):
+    __tablename__ = "tb_discover_weekly"
+
+    id = db.Column(db.String(100), primary_key=True)
+    name = db.Column(db.String(100))
+    image = db.Column(db.String(200))
+    total = db.Column(db.Integer)
+    owner = db.Column(db.String(40))
+    spotify_url = db.Column(db.String(200))
+
+    def __repr__(self) -> str:
+        return "Name <%r>" % self.name

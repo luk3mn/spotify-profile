@@ -1,0 +1,27 @@
+{
+    "cSpell.words": [
+        "Renan"
+    ],
+    "sqltools.useNodeRuntime": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:spotify-profile}/instance/spotify-profile.db",
+            "name": "Spotify Profile"
+        },
+        {
+            "pgOptions": {
+                "ssl": true
+            },
+            "previewLimit": 50,
+            "server": "ep-damp-fire-06191452.us-east-1.aws.neon.tech",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "Neon Spotify Profile",
+            "username": "luk3mn",
+            "database": "spotify-profile",
+            "password": "YrA27zNwCmKt"
+        }
+    ]
+}
