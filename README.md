@@ -174,15 +174,18 @@ _For more explanations, please refer to the [Documentation](https://developer.sp
   - [x] Data Transform: _Transform these data in structure data using pandas_
   - [x] Data Load: _Store these data on database to retrieve on web application using SQL Alchemy_
 - [ ] Web application
-  - [x] Get User's Top Tracks
-    - [ ] short_term (approximately last 4 weeks)
-    - [ ] medium_term (approximately last 6 months)
-  - [ ] Get Recommendations
-  - [ ] Spotify profile information
-    - [ ] Get User's Profile
+  - [x] Profile
+    - [x] Get User's Profile
+    - [x] Get User's Top Artists
+    - [x] Spotify Playlist
+  - [x] Tracks
+    - [x] Get User's Top Tracks
+  - [ ] Discover
     - [ ] Get Recently Played Tracks
-    - [ ] Get User's Top Artists
-  - [ ] Spotify Playlist
+    - [ ] Discover Weekly
+    - [ ] Latest Played Track
+    - [ ] Most Played Track
+    - [ ] Recommendations
 
 <p align="right">(<a href="#spotify-profile">back to top</a>)</p>
 

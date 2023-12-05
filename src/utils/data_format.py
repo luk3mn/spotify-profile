@@ -201,7 +201,7 @@ class DataFormat:
         spotify_url = []
 
         for r in response['playlists']['items']:
-            if r['owner']['display_name'] != "Lucas Renan":
+            if r['owner']['display_name'] == "Spotify":
                 item_id.append(r['id'])
                 name.append(r['name'])
                 image.append(r['images'][0]['url'])

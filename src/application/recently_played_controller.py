@@ -14,7 +14,7 @@ class RecentlyPlayedController:
                     popularity,
                     spotify_url,
                     preview_url,
-                    album_url
+                    album_url,
                     release,
                     image,
                     count(track_id) as "played"

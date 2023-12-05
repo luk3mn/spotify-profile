@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spotify Profile</title>
-    <link rel="stylesheet" href=" {{ url_for('static', filename='css/main.css') }} ">
-    <link rel="stylesheet" href=" {{ url_for('static', filename='css/profile.css') }} ">
-    <link rel="stylesheet" href=" {{ url_for('static', filename='css/player.css') }} ">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='img/spotify-icon.png') }}" type="image/x-icon">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Spotify Profile</title>
+        <link rel="stylesheet" href=" {{ url_for('static', filename='css/main.css') }} ">
+        <link rel="stylesheet" href=" {{ url_for('static', filename='css/profile.css') }} ">
+        <link rel="stylesheet" href=" {{ url_for('static', filename='css/discover.css') }} ">
+        <link rel="stylesheet" href=" {{ url_for('static', filename='css/player.css') }} ">
+        <script src="{{ url_for('static', filename='js/CardTrack.js') }}" defer></script>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='img/spotify-icon.png') }}" type="image/x-icon">
 </head>
 <body>
     <div class="container">

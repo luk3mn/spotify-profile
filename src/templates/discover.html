@@ -1,22 +1,88 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Discover</h1>
-    <!-- Recently Played Tracks -->
-    {% for track in played_tracks %}
-        {{ track.name }}
-    {% endfor %}
 
-    <!-- Most Played Track -->
-    {{ most_played }}
+<div class="discover-box">
+
+    <div class="discover">
+        <h3>Discover</h3>
+        <div class="discover-box-card">
+
+            <card-track
+                image="{{ discover_weekly[0].image }}"
+                spotify="{{ discover_weekly[0].spotify_url }}"
+                artist="{{ discover_weekly[0].owner }}"
+                icon="../static/img/play-solid.svg"
+                song="TRACK: {{ discover_weekly[0].name }}"
+                album="TOTAL: {{ discover_weekly[0].total }}"
+            >
+            </card-track>
+            
+            <card-track
+                image="{{ most_played[0].image }}"
+                spotify="{{ most_played[0].spotify_url }}"
+                artist="{{ most_played[0].artist }}"
+                icon="../static/img/play-solid.svg"
+                song="TRACK: {{ most_played[0].name }}"
+                album="ALBUM: {{ most_played[0].album }}"
+                release="RELEASE: {{ most_played[0].release }}"
+                popularity="POPULARITY: {{ most_played[0].popularity }}"
+            >
+            </card-track>
+
+            <card-track
+                image="{{ latest_played[0].image }}"
+                spotify="{{ latest_played[0].spotify_url }}"
+                artist="{{ latest_played[0].artist }}"
+                icon="../static/img/play-solid.svg"
+                song="TRACK: {{ latest_played[0].name }}"
+                album="ALBUM: {{ latest_played[0].album }}"
+                release="RELEASE: {{ latest_played[0].release }}"
+                popularity="POPULARITY: {{ latest_played[0].popularity }}"
+            >
+            </card-track>
+
+        </div>
+    </div>
     
-    <!-- Latest Played Track -->
-    {{ latest_played }}
+    <div class="recently-played">
+        <h3>Recently Played Tracks</h3>
+        <div class="box-cards">
+                 
+            <!-- Card -->
+            {% for track in played_tracks %}
+                <card-track
+                    image="{{ track.image }}"
+                    spotify="{{ track.spotify_url }}"
+                    artist="{{ track.artist }}"
+                    icon="../static/img/play-solid.svg"
+                    song="TRACK: {{ track.name }}"
+                    album="ALBUM: {{ track.album }}"
+                    release="RELEASE: {{ track.release }}"
+                    popularity="POPULARITY: {{ track.popularity }}"
+                    played="PLAYED: {{ track.played }}"
+                >
+                </card-track>
+            {% endfor %}
+            
+        </div>
+    </div>
+  
+    <div class="recommendations">
+        <h3>Recommendations</h3>
+        <div class="box-cards">
+            {% for recommendation in recommendations %}
+            <div class="card">
+                <img src="{{ recommendation.image }}" alt="">
+                <a href="{{ recommendation.spotify_url }}" target="_blank" rel="noopener noreferrer">
+                    <img src="../static/img/play-solid.svg" alt="">
+                </a>
+            </div>
+            {% endfor %}
 
-    <!-- Recommendations -->
-    {{ recommendations }}
+        </div>
+    </div>
 
-    <!-- Discover Weekly -->
-    {{ discover_weekly }}
+</div>
     
 {% endblock %}

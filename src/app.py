@@ -110,7 +110,7 @@ def callback():
     recently_played_c.insert_data(data_format.format_recently_played_tracks(get_data.get_recently_played_tracks(limit=50)))
 
     recommendation_c = ApplicationController(model=RecommendationModel())
-    recommendation_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='rock', limit=20)))
+    recommendation_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='rock', limit=50)))
 
     discover_c = ApplicationController(model=DiscoverWeeklyModel())
     discover_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='discover weekly', limit=1)))
