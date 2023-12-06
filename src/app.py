@@ -35,6 +35,8 @@ NOTE: We explore the options to store links related with our Spotify data de cre
       on web app
 """
 import os
+import json
+from datetime import timedelta
 from flask import Flask, render_template, redirect, session, request
 from dotenv import load_dotenv
 
@@ -91,29 +93,36 @@ def callback():
         get_data = GetData(headers=headers)
         data_format = DataFormat()
 
+        track_c = ApplicationController(model=TrackModel())
+        track_c.insert_data(data_format.format_top_tracks(response=get_data.get_users_top_items(time_range='medium_term', limit=50)))
+
+        profile_c = ApplicationController(model=ProfileModel())
+        profile_c.insert_data(data_format.format_users_profile(response=get_data.get_users_profile(user_id=SPOTIFY_USER_ID)))
+
+        artists_c = ApplicationController(model=ArtistModel())
+        artists_c.insert_data(data_format.format_top_artists(response=get_data.get_users_top_items(type_item='artists', limit=50)))
+
+        playlist_c = ApplicationController(model=PlaylistModel())
+        playlist_c.insert_data(data_format.format_current_playlists(response=get_data.get_current_users_playlist(limit=50)))
+
+        recently_played_c = ApplicationController(model=RecentlyPlayedModel())
+        recently_played_c.insert_data(data_format.format_recently_played_tracks(get_data.get_recently_played_tracks(limit=50)))
+
+        recommendation_c = ApplicationController(model=RecommendationModel())
+        recommendation_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='rock', limit=50)))
+
+        discover_c = ApplicationController(model=DiscoverWeeklyModel())
+        discover_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='discover weekly', limit=1)))
+
+    except json.JSONDecodeError:
+        session.clear()
+        session.permanent = True
+        app.permanent_session_lifetime = timedelta(seconds=5)
+        session['access_denied'] = "Sorry! But it appears you have no permission to use this feature to request new data!"
+        return redirect('/')
     except Exception:
         return redirect('/authorization') # if access token doesn't exist, redirect to get a new authentication
 
-    track_c = ApplicationController(model=TrackModel())
-    track_c.insert_data(data_format.format_top_tracks(response=get_data.get_users_top_items(time_range='medium_term', limit=50)))
-
-    profile_c = ApplicationController(model=ProfileModel())
-    profile_c.insert_data(data_format.format_users_profile(response=get_data.get_users_profile(user_id=SPOTIFY_USER_ID)))
-
-    artists_c = ApplicationController(model=ArtistModel())
-    artists_c.insert_data(data_format.format_top_artists(response=get_data.get_users_top_items(type_item='artists', limit=50)))
-
-    playlist_c = ApplicationController(model=PlaylistModel())
-    playlist_c.insert_data(data_format.format_current_playlists(response=get_data.get_current_users_playlist(limit=50)))
-
-    recently_played_c = ApplicationController(model=RecentlyPlayedModel())
-    recently_played_c.insert_data(data_format.format_recently_played_tracks(get_data.get_recently_played_tracks(limit=50)))
-
-    recommendation_c = ApplicationController(model=RecommendationModel())
-    recommendation_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='rock', limit=50)))
-
-    discover_c = ApplicationController(model=DiscoverWeeklyModel())
-    discover_c.insert_data(data_format.format_search_for_item(response=get_data.search_for_item(q='discover weekly', limit=1)))
     return redirect('/')
 
 @app.route('/tracks')

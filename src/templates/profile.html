@@ -47,7 +47,12 @@
         </div>
     </div>
 </div>
-
+{% if session['access_denied'] %}
+    <div class="msg-error">
+        <p>{{ session['access_denied'] }}</p>
+        <i class="fa-solid fa-xmark" id="msg-close"></i>
+    </div>
+{% endif %}
 <div class="playlists">
     <h3>User's PLaylists</h3>
     <div class="box-playlist-card">

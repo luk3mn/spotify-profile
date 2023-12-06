@@ -58,45 +58,60 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-![Home](assets/image-app.png)
+![Home](src/assets/diagram.png)
 
 
 <p align="justify">
-  A simple web application to consume my private data from Spotify using the Web API from Spotify for developers and to be able to build a data pipeline ETL using Flask to get authorization to consume these data and extract them from my Spotify account.
-</p>
+  Web Applications built in Python and Flask to implement an ETL pipeline to extract Spotify private data via API and load it on the database. This project will allow Flask to request my private data from Spotify API and structure them using pandas to load in a Postgres database, and a little bit further, retrieve these data in a Front-End application built in HTML5, CSS3, and Javascript, and on top of that, it was necessary to use jinja2 from Flask to allow using templates on front-end application. 
 
-### Utils modules
+  In this project, it was necessary to split it into three parts, such as: 
+  - **ETL Pipeline:** to extract and load these on the database;
+  - **Front-End Application:** User’s interface to be able to showcase these private data in a web application;
+  - **Deploy:** The last part was deployment from a web application using GitHub and cloud AWS by Render Deployment to create a CI/CI workflow to allow new releases on the web application;
+</p> 
+
+### Utils Module
 > Authorization
 
-It's the first part of our application because we need to get permission for it to use our private data on Spotify. We can find it on the authorization route from the flask application.
-- Authorization: allow Flask application can use private user data
+Allow Flask to use some Spotify permission to connect the web application to Spotify API.
 
-> Get Access Token
-
-We can send a type 'post' request with the params necessary to API and get a response with an access token:
-- TYPE: "grant_type"
-- AUTHORIZATION CODE: "code"
-- APP REDIRECT URI: "redirect_uri"
-- SPOTIFY CLIENT ID: 'client_id'
-- SPOTIFY CLIENT SECRET: 'client_secret'
+- **Get Access Token:** It will be to send a type 'post' request with some params for API and get a response with an access token:
+  - TYPE: "grant_type"
+  - AUTHORIZATION CODE: "code"
+  - APP REDIRECT URI: "redirect_uri"
+  - SPOTIFY CLIENT ID: 'client_id'
+  - SPOTIFY CLIENT SECRET: 'client_secret'
 
 _NOTE: we can get these params on Spotify documentation_
 
 > Get Data: 
 
-This module can get our data from Spotify API and store it in a JSON file to treat after processing it:
-- According to the Spotify API, we can recover three types of our user's top items using a param named 'time_range', there are:
-    - long-term (Several years of data and including all new data as it becomes available)
-    - medium-term (approximately last 6 months)
-    - short-term (approximately last 4 weeks)
-- On top of that, we can specify the type of content 'artist' or 'tracks', for us, we need just 'tracks'.
+This module can get our data from Spotify API as a JSON response and pass them for data format. In that way, we could use some API endpoint from Spotify to request these data, such as:
+Get Uer’s Top Items: include Tracks and Artists
+Get User’s Profile
+Get Current User’s Playlist
+Get Recently Played Tracks
+Search For Items
+> Data Format
 
-> Structure top items
+We can use it to structure every data extracted using pandas, in other words, part of the transformation data happens here because we need to structure these data before loading them on the database.
+It will be returned to a Pandas DataFrame
+Store these data formatted on the database using SQLAlchemy function “to_sql”.
 
-We can use it to structure every data extracted using pandas, in other words, part of the transformation data happens here because we need to structure these data before loading on the on database.
-1. We need to get these data stored in a JSON file
-2. To structure these data using dictionaries
-3. Return a visualization with some fields using a pandas data frame
+
+### Loading data
+It comes after extracting and formatting target data, and then, it’ll be possible to come up with a way to ingest structured data into the database. To be able to ingest these data, it was necessary to use the SQLAlchemy library from Python and the function “to_sql” to convert Pandas DataFrame to SQL syntax.
+
+In the first place, data ingestion was used on an SQLite database, to be able to store simple data, but, a little bit further, it was important to create a Postgres Database using docker as a test local database, before shifting to a production database working on cloud.
+
+### Front-End Application
+This part of the application was built using HTML5, CSS3, and Javascript to interact with jinja2 from Flask to data retrieval from database to interface application. On top of that, the application interface was split into three views to explore many endpoint features from API and so on.
+
+Each of these views requests data from the Postgres database using jinja2 templates which interact with front-end stacks to render some pieces of information in the application interface.
+
+After building the first view from the web application, it used Github to create a CI/CD process to allow web service working on the cloud to request new updates from the web application every time the new adust is detected. 
+
+It’s important to say, that there exists an option in profile visualization to request new data for Spotify API to be able to update the database with new information, but it’s just can be used by a logged account from Spotify that is requesting these data.
 
 <p align="right">(<a href="#spotify-profile">back to top</a>)</p>
 
@@ -111,7 +126,7 @@ Write here
 * [![Pandas][Pandas]][Pandas-url]
 * [![PostgreSQL][PostgreSQL]][PostgreSQL-url]
 * [![Spotify][Spotify]][Spotify-url]
-* [![Json][Json]][Json-url]
+* [![Javascript][Javascript]][Javascript-url]
 
 <p align="right">(<a href="#spotify-profile">back to top</a>)</p>
 
@@ -151,10 +166,10 @@ _Before starting this application in your local environment, it'll be necessary 
 ## Usage
 
 1. Create a new app on Spotify API after logging on your spotify account
-![Create App](assets/spotify_dashboard.png)
+![Create App](src/assets/spotify_dashboard.png)
 
 2. Get both access credentials, "CLIENT_ID" and "CLIENT_SECRET" and indicate your redirect path of the application
-![Get Permissoins](assets/spotify_app_settings.png)
+![Get Permissoins](src/assets/spotify_app_settings.png)
 
 **OBS: This path it'll be necessary to extract our data from Spotify, we can specify it after building our flask application.**
 
@@ -162,9 +177,63 @@ _For more explanations, please refer to the [Documentation](https://developer.sp
 
 <p align="right">(<a href="#spotify-profile">back to top</a>)</p>
 
-![Tracks](assets/image-app2.png)
+> Useful Queries: Can be useful to personalize these queries to showcase some information in better or different ways.
 
+- Select to allow showcase of these data groups by the number of times that the same track was played:
+```
+query = db.session.execute(text("""
+    SELECT  name,
+            artist,
+            album,
+            popularity,
+            spotify_url,
+            preview_url,
+            album_url,
+            release,
+            image,
+            count(track_id) as "played"
+    from tb_recently_played
+    GROUP BY name, album, artist, release, image, popularity, spotify_url, preview_url, album_url
+    ORDER BY played DESC
+""")).all()
+```
 
+- Select the most played track among all in the same list:
+```
+query = db.session.execute(text("""
+    SELECT * FROM (
+        SELECT  name, 
+                image, 
+                artist, 
+                album, 
+                release, 
+                popularity, 
+                spotify_url,
+                count(track_id) as "played"
+        FROM tb_recently_played
+        GROUP BY name, image, track_id, artist, album, release, popularity, spotify_url
+        ORDER BY played DESC
+    ) AS "most_played"
+    WHERE played = (
+        SELECT max(played) FROM (
+            SELECT count(track_id) as "played"
+            FROM tb_recently_played
+            GROUP BY track_id
+        ) AS "max_played"
+    )
+""")).all()
+```
+
+- Select the latest played track based on the time that this song was played:
+```
+query = db.session.execute(text("""
+    SELECT * FROM tb_recently_played
+    WHERE played_at = (
+        SELECT max(played_at)
+        FROM tb_recently_played
+    )
+""")).all()
+```
 
 <!-- ROADMAP -->
 ## Roadmap
@@ -180,12 +249,12 @@ _For more explanations, please refer to the [Documentation](https://developer.sp
     - [x] Spotify Playlist
   - [x] Tracks
     - [x] Get User's Top Tracks
-  - [ ] Discover
-    - [ ] Get Recently Played Tracks
-    - [ ] Discover Weekly
-    - [ ] Latest Played Track
-    - [ ] Most Played Track
-    - [ ] Recommendations
+  - [x] Discover
+    - [x] Get Recently Played Tracks
+    - [x] Discover Weekly
+    - [x] Latest Played Track
+    - [x] Most Played Track
+    - [x] Recommendations
 
 <p align="right">(<a href="#spotify-profile">back to top</a>)</p>
 
@@ -258,5 +327,5 @@ I think it would be interesting to sit here some references and other resources 
 [PostgreSQL-url]: https://www.postgresql.org/
 [Spotify]: https://img.shields.io/badge/Spotify%20API-1DB954?style=for-the-badge&logo=spotify&logoColor=ffffff
 [Spotify-url]: https://developer.spotify.com/documentation/web-api
-[Json]: https://img.shields.io/badge/Json-000000?style=for-the-badge&logo=json&logoColor=ffffff
-[Json-url]: https://www.json.org/json-en.html
+[Javascript]: https://img.shields.io/badge/Javascript-yellow?style=for-the-badge&logo=javascript&logoColor=ffffff
+[Javascript-url]: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript

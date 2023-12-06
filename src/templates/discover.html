@@ -11,7 +11,7 @@
             <card-track
                 image="{{ discover_weekly[0].image }}"
                 spotify="{{ discover_weekly[0].spotify_url }}"
-                artist="{{ discover_weekly[0].owner }}"
+                artist="By {{ discover_weekly[0].owner }}"
                 icon="../static/img/play-solid.svg"
                 song="TRACK: {{ discover_weekly[0].name }}"
                 album="TOTAL: {{ discover_weekly[0].total }}"
@@ -21,7 +21,7 @@
             <card-track
                 image="{{ most_played[0].image }}"
                 spotify="{{ most_played[0].spotify_url }}"
-                artist="{{ most_played[0].artist }}"
+                artist="MOST PLAYED: {{ most_played[0].artist }}"
                 icon="../static/img/play-solid.svg"
                 song="TRACK: {{ most_played[0].name }}"
                 album="ALBUM: {{ most_played[0].album }}"
@@ -33,7 +33,7 @@
             <card-track
                 image="{{ latest_played[0].image }}"
                 spotify="{{ latest_played[0].spotify_url }}"
-                artist="{{ latest_played[0].artist }}"
+                artist="LATEST PLAYED: {{ latest_played[0].artist }}"
                 icon="../static/img/play-solid.svg"
                 song="TRACK: {{ latest_played[0].name }}"
                 album="ALBUM: {{ latest_played[0].album }}"
